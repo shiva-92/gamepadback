@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const formidableMiddleware = require("express-formidable");
+const axios = require("axios");
 
 const app = express();
 app.use(formidableMiddleware());
@@ -12,9 +13,7 @@ const encBase64 = require("crypto-js/enc-base64");
 const uid2 = require("uid2");
 
 require("dotenv").config();
-// mongoose.connect(process.env.MONGODB_URI);
-
-mongoose.connect("mongodb://localhost:27017/bdgamepad");
+mongoose.connect(process.env.MONGODB_URI);
 
 const favori = mongoose.model("favori", {
   visuelgame: String,
@@ -126,6 +125,42 @@ app.post("/recuperecommentaire", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+app.get("/games", async (req, res) => {
+  const game = req.query.game;
+  const choix = req.query.choix;
+  const idgame = req.query.idgame;
+  const gametype = req.query.gametype;
+  const check = req.query.check;
+
+  let endpoint =
+    "https://api.rawg.io/api/games?key=1804fba238364ea59c70ba67e4ba4d18";
+
+  if (game) {
+    endpoint = endpoint + `&` + `search=` + game;
+  }
+
+  if (choix) {
+    endpoint = endpoint + `&` + `ordering=` + choix;
+  }
+
+  if (idgame) {
+    endpoint = endpoint + `&` + `platforms=` + idgame;
+  }
+
+  if (gametype) {
+    endpoint = endpoint + `&` + `genres=` + gametype;
+  }
+
+  if (check) {
+    endpoint = endpoint + `&` + `page=` + check;
+  }
+
+  const response = await axios.get(endpoint);
+
+  res.json(response.data);
+  console.log(response.data);
+});
+
+app.listen(process.env.PORT, () => {
   console.log("Server started");
 });

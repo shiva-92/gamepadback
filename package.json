@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.26.0",
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.0",
@@ -18,5 +20,8 @@
     "express-formidable": "^1.2.0",
     "mongoose": "^6.0.14",
     "uid2": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
