@@ -125,7 +125,6 @@ app.post("/recuperecommentaire", async (req, res) => {
   }
 });
 
-//GAMES
 app.get("/games", async (req, res) => {
   const game = req.query.game;
   const choix = req.query.choix;
@@ -162,29 +161,26 @@ app.get("/games", async (req, res) => {
   console.log(response.data);
 });
 
-//GENRES
 app.get("/genres", async (req, res) => {
   const response = await axios.get(
     `https://api.rawg.io/api/genres?key=1804fba238364ea59c70ba67e4ba4d18`
   );
 
-  res.json(response.data); //ce que tu renvoies au front
+  res.json(response.data);
 });
 
-//PLATFORMS
 app.get("/platforms", async (req, res) => {
   const response = await axios.get(
     `https://api.rawg.io/api/platforms?key=1804fba238364ea59c70ba67e4ba4d18`
   );
 
-  res.json(response.data); //ce que tu renvoies au front
+  res.json(response.data);
 });
 
 app.listen(process.env.PORT, () => {
   console.log("Server started");
 });
 
-//ID
 app.get("/keygame", async (req, res) => {
   const id = req.query.id;
 
@@ -192,5 +188,15 @@ app.get("/keygame", async (req, res) => {
     `https://api.rawg.io/api/games/${id}?key=1804fba238364ea59c70ba67e4ba4d18`
   );
 
-  res.json(response.data); //ce que tu renvoies au front
+  res.json(response.data);
+});
+
+app.get("/gameseries", async (req, res) => {
+  const id = req.query.id;
+
+  const response = await axios.get(
+    `https://api.rawg.io/api/games/${id}/game-series?key=1804fba238364ea59c70ba67e4ba4d18`
+  );
+
+  res.json(response.data);
 });
