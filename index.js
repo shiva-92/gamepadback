@@ -11,7 +11,10 @@ const SHA256 = require("crypto-js/sha256");
 const encBase64 = require("crypto-js/enc-base64");
 const uid2 = require("uid2");
 
-mongoose.connect("mongodb://localhost:27017/bdgamepad");
+require("dotenv").config();
+mongoose.connect(process.env.MONGODB_URI);
+
+// mongoose.connect("mongodb://localhost:27017/bdgamepad");
 
 const favori = mongoose.model("favori", {
   visuelgame: String,
@@ -123,6 +126,6 @@ app.post("/recuperecommentaire", async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
   console.log("Server started");
 });
